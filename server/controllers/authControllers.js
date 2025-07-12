@@ -1,6 +1,14 @@
+const ImageKit = require('imagekit');
+const fs = require('fs');
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
 const User = require('../models/User');
+
+const imagekit = new ImageKit({
+    publicKey: process.env.IMAGEKIT_PUBLIC_KEY,
+    privateKey: process.env.IMAGEKIT_PRIVATE_KEY,
+    urlEndpoint: process.env.IMAGEKIT_URL_ENDPOINT,
+});
 
 exports.getMe = (req, res) => {
     res.status(200).json({ user: req.user });
@@ -33,7 +41,7 @@ exports.login = async (req, res) => {
 exports.signup = async (req, res) => {
     try {
         const { name, email, password } = req.body;
-        const avatar = req.file ? `/uploads/avatars/${req.file.filename}` : '';
+        let avatarUrl = '';
 
         if (!name) return res.status(400).json({ message: 'Name is required' });
         else if (!email) return res.status(400).json({ message: 'Email is required' });
@@ -44,13 +52,28 @@ exports.signup = async (req, res) => {
             return res.status(409).json({ message: 'User already exists' });
         }
 
+        if (req.file) {
+            const fileBuffer = fs.readFileSync(req.file.path);
+            const fileName = req.file.originalname;
+
+            const uploadResult = await imagekit.upload({
+                file: fileBuffer,
+                fileName,
+                folder: 'avatars',
+            });
+
+            avatarUrl = uploadResult.url;
+
+            fs.unlinkSync(req.file.path);
+        }
+
         const hashedPassword = await bcrypt.hash(password, 10);
 
         const newUser = new User({
             name,
             email,
             password: hashedPassword,
-            avatar
+            avatar: avatarUrl,
         });
 
         await newUser.save();

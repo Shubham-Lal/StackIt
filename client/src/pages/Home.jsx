@@ -5,7 +5,7 @@ import Post from '../components/Post'
 import FilterButton from '../components/FilterButton'
 import Pagination from '../components/Pagination'
 
-export default function Home () {
+export default function Home() {
   const { questions, setQuestions } = useQuestionStore()
 
   const [filters, setFilters] = useState(['Newest', 'Most voted'])
@@ -18,16 +18,18 @@ export default function Home () {
         const data = await res.json()
         if (res.ok) {
           setQuestions(data.questions)
-        } else {
+        }
+        else {
           console.error(data.message || 'Failed to fetch questions')
         }
-      } catch {
+      }
+      catch {
         console.error('Error fetching questions')
       }
     }
 
     if (!questions.length) fetchQuestions()
-  }, [questions.length])
+  }, [questions.length, setQuestions])
 
   return (
     <div className='py-8 px-24'>
@@ -40,7 +42,7 @@ export default function Home () {
           </NavLink>
         </div>
         {/* Filters */}
-        <div className='w-full flex justify-end gap-4 mt-4'>
+        <div className='w-full flex items-center justify-end gap-4 mt-4'>
           <div className='flex p-1 items-center border gap-1 border-gray-300 rounded-lg'>
             {/* <p className='px-2 py-1 rounded-md bg-gray-200'>Newest</p>
             <p className='px-2 py-1 rounded-md bg-gray-200'>Active</p>
@@ -109,7 +111,7 @@ export default function Home () {
         {questions.length > 0 ? (
           questions.map(question => <Post key={question._id} post={question} />)
         ) : (
-          <p>No questions posted yet</p>
+          <p className='py-8 border-b border-gray-300'>No questions posted yet</p>
         )}
 
         <Pagination />

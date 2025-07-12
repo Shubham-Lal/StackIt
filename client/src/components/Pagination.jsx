@@ -2,14 +2,14 @@ import React, { useState } from 'react'
 import { useSearchParams } from 'react-router-dom'
 import PaginationButton from './PaginationButton'
 
-export default function Pagination () {
+export default function Pagination() {
   const [totalPages, setTotalPages] = useState(5)
   const perPageOptions = [15, 30, 50]
   const [activePerPage, setActivePerPage] = useState(15)
   const [activePageNumber, setActivePageNumber] = useState(1)
 
   const [searchParams, setSearchParams] = useSearchParams()
-  console.log('params: ', searchParams)
+
   return (
     <div className='text-sm flex justify-between mt-8'>
       {/* For number of pages, and current active page */}
@@ -18,6 +18,7 @@ export default function Pagination () {
           .fill()
           .map((_, i) => (
             <PaginationButton
+              key={i}
               active={i + 1 === activePageNumber}
               pageNumber={i + 1}
             />
@@ -28,9 +29,10 @@ export default function Pagination () {
       </div>
 
       {/* for result per page */}
-      <div className='flex gap-2'>
+      <div className='flex items-center gap-2'>
         {perPageOptions.map((perPage, i) => (
           <PaginationButton
+            key={i}
             active={perPage === activePerPage}
             pageNumber={perPage}
           />

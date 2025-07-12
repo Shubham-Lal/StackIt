@@ -1,4 +1,12 @@
+const ImageKit = require('imagekit');
+const fs = require('fs');
 const Question = require('../models/Question');
+
+const imagekit = new ImageKit({
+    publicKey: process.env.IMAGEKIT_PUBLIC_KEY,
+    privateKey: process.env.IMAGEKIT_PRIVATE_KEY,
+    urlEndpoint: process.env.IMAGEKIT_URL_ENDPOINT,
+});
 
 exports.getQuestionById = async (req, res) => {
     const { id } = req.params;
@@ -32,9 +40,25 @@ exports.getAllQuestions = async (req, res) => {
     }
 };
 
-exports.uploadImage = (req, res) => {
-    const fileUrl = `http://localhost:${process.env.PORT || 5000}/uploads/questions/${req.file.filename}`;
-    res.json({ url: fileUrl });
+exports.uploadImage = async (req, res) => {
+    try {
+        const file = req.file;
+        const fileBuffer = fs.readFileSync(file.path);
+
+        const uploadResult = await imagekit.upload({
+            file: fileBuffer,
+            fileName: file.originalname,
+            tags: ['question-image'],
+            folder: 'question-images',
+        });
+
+        fs.unlinkSync(file.path);
+
+        return res.status(200).json({ url: uploadResult.url });
+    }
+    catch (error) {
+        return res.status(500).json({ message: 'Image upload failed' });
+    }
 };
 
 exports.saveQuestion = async (req, res) => {

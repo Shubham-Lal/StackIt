@@ -3,7 +3,7 @@ import { useUserStore } from '../store/userStore'
 import { NavLink } from 'react-router-dom'
 import NavlinkButton from './NavlinkButton'
 
-export default function Navbar () {
+export default function Navbar() {
   const { isAuthenticated, user } = useUserStore()
 
   return (
@@ -28,17 +28,13 @@ export default function Navbar () {
         </div>
 
         {isAuthenticated ? (
-          <button className='size-[34px] rounded-full bg-blue-50 hover:bg-blue-200 border border-blue-500 overflow-hidden'>
+          <div className='size-[34px] rounded-full bg-blue-50 hover:bg-blue-200 border border-blue-500 overflow-hidden'>
             <img
-              src={
-                user.avatar
-                  ? `http://localhost:5000${user.avatar}`
-                  : '/user.png'
-              }
+              src={user.avatar || '/user.png'}
               alt=''
               className='size-full object-cover'
             />
-          </button>
+          </div>
         ) : (
           <div className='flex items-center gap-1'>
             <Link

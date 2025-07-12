@@ -1,4 +1,3 @@
-import { toast } from 'sonner'
 import { useUserStore } from '../store/userStore'
 
 export const useAuthFetch = () => {
