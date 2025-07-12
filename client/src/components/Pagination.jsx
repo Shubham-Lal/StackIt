@@ -11,7 +11,7 @@ export default function Pagination () {
   const [searchParams, setSearchParams] = useSearchParams()
   console.log('params: ', searchParams)
   return (
-    <div className='text-sm flex justify-between'>
+    <div className='text-sm flex justify-between mt-8'>
       {/* For number of pages, and current active page */}
       <div className='flex gap-2'>
         {Array(totalPages)

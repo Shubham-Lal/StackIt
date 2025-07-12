@@ -5,8 +5,8 @@ import Post from '../components/Post'
 import FilterButton from '../components/FilterButton'
 import Pagination from '../components/Pagination'
 
-export default function Home() {
-  const { questions, setQuestions } = useQuestionStore();
+export default function Home () {
+  const { questions, setQuestions } = useQuestionStore()
 
   const [filters, setFilters] = useState(['Newest', 'Most voted'])
   const [activeFilter, setActiveFilter] = useState(filters[0])
@@ -26,7 +26,7 @@ export default function Home() {
       }
     }
 
-    if (!questions.length) fetchQuestions();
+    if (!questions.length) fetchQuestions()
   }, [questions.length])
 
   return (
@@ -107,12 +107,12 @@ export default function Home() {
 
         {/* Show the questions */}
         {questions.length > 0 ? (
-          questions.map((question) => (
-            <Post key={question._id} post={question} />
-          ))
+          questions.map(question => <Post key={question._id} post={question} />)
         ) : (
           <p>No questions posted yet</p>
         )}
+
+        <Pagination />
       </section>
     </div>
   )
