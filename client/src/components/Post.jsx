@@ -1,3 +1,5 @@
+import { Link } from "react-router-dom"
+
 export default function Post({ post }) {
   const getPlainText = (html) => {
     const tempDiv = document.createElement('div')
@@ -9,7 +11,6 @@ export default function Post({ post }) {
     const now = new Date();
     const past = new Date(isoDate);
     const diffMs = now - past;
-    console.log(diffMs)
 
     const seconds = Math.floor(diffMs / 1000);
     const minutes = Math.floor(diffMs / (1000 * 60));
@@ -27,7 +28,7 @@ export default function Post({ post }) {
   }
 
   return (
-    <div className='mt-8 flex gap-4 p-4 border-t border-gray-300'>
+    <div className='flex gap-4 px-4 py-8 border-b border-gray-300'>
       {/* Left part of post */}
       <div className='text-right whitespace-nowrap'>
         <p>0 votes</p>
@@ -37,9 +38,9 @@ export default function Post({ post }) {
 
       {/* The right portion the post */}
       <div className='flex-1'>
-        <div>
-          <h1 className='text-blue-200'>{post.title}</h1>
-          <p>{getPlainText(post.description)}</p>
+        <div className="flex flex-col">
+          <Link to={`/question/${post._id}`} className='text-blue-200'>{post.title}</Link>
+          <Link to={`/question/${post._id}`}>{getPlainText(post.description)}</Link>
         </div>
 
         {/* The tags and user details */}

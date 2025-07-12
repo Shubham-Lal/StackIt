@@ -1,11 +1,13 @@
 import { useEffect, useState } from 'react'
 import { NavLink } from 'react-router-dom'
+import { useQuestionStore } from '../store/questionStore'
 import Post from '../components/Post'
 
 export default function Home() {
+  const { questions, setQuestions } = useQuestionStore();
+
   const [filters, setFilters] = useState(['Newest', 'Most voted'])
   const [activeFilter, setActiveFilter] = useState(filters[0])
-  const [questions, setQuestions] = useState([])
 
   useEffect(() => {
     const fetchQuestions = async () => {
@@ -24,8 +26,8 @@ export default function Home() {
       }
     }
 
-    fetchQuestions()
-  }, [])
+    if (!questions.length) fetchQuestions();
+  }, [questions.length])
 
   return (
     <div className='py-8 px-24'>
@@ -47,7 +49,7 @@ export default function Home() {
         </div>
 
         {/* Searchbar */}
-        <div className='flex mt-4 items-center gap-1 focus-within:border-amber-500 rounded-lg p-2 border-1 border-gray-300'>
+        <div className='flex mt-4 mb-8 items-center gap-1 focus-within:border-amber-500 rounded-lg p-2 border-1 border-gray-300'>
           <label className='block text-gray-100 h-4 w-4' htmlFor='search-bar'>
             <svg
               viewBox='0 0 24 24'
@@ -64,19 +66,23 @@ export default function Home() {
             </svg>
           </label>
           <input
-            className='border-none focus:border-none focus:outline-none'
+            className='w-full border-none focus:border-none focus:outline-none'
             id='search-bar'
             type='text'
             placeholder='Search...'
           />
         </div>
 
+        <div className='bg-gray-300 w-full h-[1px]' />
+
         {/* Show the questions */}
-        <div className='mt-6'>
-          {questions.map((question) => (
+        {questions.length > 0 ? (
+          questions.map((question) => (
             <Post key={question._id} post={question} />
-          ))}
-        </div>
+          ))
+        ) : (
+          <p>No questions posted yet</p>
+        )}
       </section>
     </div>
   )

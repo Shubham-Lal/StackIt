@@ -1,11 +1,14 @@
 import { useRef, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { toast } from 'sonner'
+import { useQuestionStore } from '../store/questionStore'
 import Editor from '../components/Editor'
 import TagsInput from '../components/TagsInput'
 
-export default function Question() {
+export default function PostQuestion() {
     const navigate = useNavigate();
+
+    const { questions, setQuestions } = useQuestionStore();
 
     const [title, setTitle] = useState('');
     const [description, setDescription] = useState('');
@@ -62,7 +65,7 @@ export default function Question() {
                 html = html.replaceAll(blobUrl, serverUrl);
             }
 
-            const saveRes = await fetch('http://localhost:5000/api/questions/save-question', {
+            const res = await fetch('http://localhost:5000/api/questions/save-question', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
@@ -75,13 +78,18 @@ export default function Question() {
                 })
             });
 
-            if (!saveRes.ok) {
-                const errorData = await saveRes.json();
-                throw new Error(errorData.message || 'Failed to save question');
+            const response = await res.json();
+
+            if (!res.ok) {
+                throw new Error(response.message || 'Failed to save question');
             }
 
             toast.success('Question saved successfully!');
             pendingImagesRef.current = [];
+
+            const question = response.question;
+            setQuestions([question, ...questions]);
+
             navigate('/');
         }
         catch (err) {

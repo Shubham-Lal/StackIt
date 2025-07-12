@@ -1,5 +1,24 @@
 const Question = require('../models/Question');
 
+exports.getQuestionById = async (req, res) => {
+    const { id } = req.params;
+
+    try {
+        const question = await Question.findById(id)
+            .populate('user', 'name avatar')
+            .exec();
+
+        if (!question) {
+            return res.status(404).json({ message: 'Question not found' });
+        }
+
+        res.json(question);
+    }
+    catch (err) {
+        res.status(500).json({ message: 'Failed to fetch question', error: err.message });
+    }
+};
+
 exports.getAllQuestions = async (req, res) => {
     try {
         const questions = await Question.find()
@@ -50,7 +69,14 @@ exports.saveQuestion = async (req, res) => {
         });
 
         await question.save();
-        res.status(201).json({ message: 'Question saved successfully' });
+
+        const savedQuestion = question.toObject();
+        savedQuestion._id = question._id;
+
+        res.status(201).json({
+            message: 'Question saved successfully',
+            question: savedQuestion
+        });
     }
     catch (err) {
         res.status(500).json({ message: 'Failed to save question' });
