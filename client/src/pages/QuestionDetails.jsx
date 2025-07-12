@@ -13,7 +13,7 @@ export default function QuestionDetails() {
                 const res = await fetch(`http://localhost:5000/api/questions/${question_id}`)
                 const response = await res.json();
 
-                if (response.question) setQuestion();
+                if (response._id) setQuestion(response);
             }
             catch (err) {
                 toast.error(err.message)
