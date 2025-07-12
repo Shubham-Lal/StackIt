@@ -1,35 +1,41 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
-import './App.css'
+import { useRef, useState } from 'react'
+import Editor from './components/Editor'
+import Toolbar from './components/Toolbar'
 
-function App() {
-  const [count, setCount] = useState(0)
+export default function App() {
+  const editorRef = useRef(null)
+  const [content, setContent] = useState('')
+  const selectionRef = useRef(null)
+
+  const handleInput = () => {
+    if (editorRef.current) {
+      setContent(editorRef.current.innerHTML)
+    }
+  }
+
+  const saveSelection = () => {
+    const selection = window.getSelection()
+    if (selection.rangeCount > 0) {
+      selectionRef.current = selection.getRangeAt(0)
+    }
+  }
 
   return (
-    <>
-      <div>
-        <a href="https://vite.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
-      </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.jsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
-    </>
+    <div className='container'>
+      <Toolbar
+        editorRef={editorRef}
+      />
+      <Editor
+        editorRef={editorRef}
+        onInput={handleInput}
+        onSelect={saveSelection}
+      />
+
+      <h3 style={{ marginTop: '2rem' }}>🔍 Live Preview:</h3>
+      <div
+        className='preview'
+        dangerouslySetInnerHTML={{ __html: content }}
+      />
+    </div>
   )
 }
-
-export default App
