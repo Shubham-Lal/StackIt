@@ -1,16 +1,14 @@
 import { Link } from 'react-router-dom'
 import { useUserStore } from '../store/userStore'
 import { NavLink } from 'react-router-dom'
-import { NavLink } from 'react-router-dom'
+import NavlinkButton from './NavlinkButton'
 
 export default function Navbar() {
   const { isAuthenticated, user } = useUserStore();
 
-  console.log(isAuthenticated)
-
   return (
     <div className='sticky top-0 border-b-1 border-gray-300'>
-      <div className='flex justify-between py-2 px-24'>
+      <div className='flex justify-between items-center py-2 px-24'>
         <div className='flex gap-8 items-center'>
           <NavLink to=''>
             <div className='flex gap-2 items-center rounded-sm px-2 py-1 cursor-pointer hover:bg-gray-200'>
@@ -38,7 +36,7 @@ export default function Navbar() {
             <Link to='/login' className='py-1 px-2 rounded-lg bg-blue-50 hover:bg-blue-200 border text-blue-500 font-light'>
               Login
             </Link>
-            <Link to='/signup' className='py-1 px-2 whitespace-nowrap whitespace-nowrap rounded-lg bg-blue-700 hover:bg-blue-900 border text-white/85 font-light'>
+            <Link to='/signup' className='py-1 px-2 rounded-lg bg-blue-700 hover:bg-blue-900 border text-white/85 font-light'>
               Sign up
             </Link>
           </div>

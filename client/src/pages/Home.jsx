@@ -2,7 +2,7 @@ import React from 'react'
 
 export default function Home () {
   return (
-    <div className='py-8'>
+    <div className='py-8 px-24'>
       {/* Search params section */}
       <section>
         {/* Ask a new question */}
