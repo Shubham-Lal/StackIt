@@ -1,17 +1,22 @@
-import React from 'react'
+import React, { useState } from 'react'
+import { NavLink } from 'react-router-dom'
 
 export default function Home () {
+  const [filters, setFilters] = useState(['Newest', 'Most voted'])
+  const [activeFilter, setActiveFilter] = useState(filters[0])
+
   return (
     <div className='py-8 px-24'>
       {/* Search params section */}
       <section>
         {/* Ask a new question */}
-        <div>
-          <button className='rounded-lg p-2 bg-blue-500 text-white'>
+        <div className='flex items-center justify-between'>
+          <di>{activeFilter} Questions</di>
+          <NavLink to='/ask' className='rounded-lg p-2 bg-blue-500 text-white'>
             As a Question
-          </button>
+          </NavLink>
         </div>
-        <div className='flex'>
+        <div className='flex mt-4 items-center gap-1 focus-within:border-amber-500 rounded-lg p-2 border-1 border-gray-300'>
           <label className='block text-gray-100 h-4 w-4' htmlFor='search-bar'>
             <svg
               viewBox='0 0 24 24'
@@ -27,7 +32,7 @@ export default function Home () {
               <g id='SVGRepo_iconCarrier'>
                 {' '}
                 <path
-                  className='stroke-gray-300'
+                  className='stroke-[#808080]'
                   d='M15.7955 15.8111L21 21M18 10.5C18 14.6421 14.6421 18 10.5 18C6.35786 18 3 14.6421 3 10.5C3 6.35786 6.35786 3 10.5 3C14.6421 3 18 6.35786 18 10.5Z'
                   strokeWidth='2'
                   strokeLinecap='round'
@@ -36,7 +41,12 @@ export default function Home () {
               </g>
             </svg>
           </label>
-          <input id='search-bar' type='text' placeholder='Search' />
+          <input
+            className='border-none focus:border-none focus:outline-none'
+            id='search-bar'
+            type='text'
+            placeholder='Search...'
+          />
         </div>
       </section>
     </div>

@@ -3,8 +3,8 @@ import { useUserStore } from '../store/userStore'
 import { NavLink } from 'react-router-dom'
 import NavlinkButton from './NavlinkButton'
 
-export default function Navbar() {
-  const { isAuthenticated, user } = useUserStore();
+export default function Navbar () {
+  const { isAuthenticated, user } = useUserStore()
 
   return (
     <div className='sticky top-0 border-b-1 border-gray-300'>
@@ -29,20 +29,33 @@ export default function Navbar() {
 
         {isAuthenticated ? (
           <button className='size-[34px] rounded-full bg-blue-50 hover:bg-blue-200 border border-blue-500 overflow-hidden'>
-            <img src={user.avatar ? `http://localhost:5000${user.avatar}` : '/user.png'} alt='' className='size-full object-cover' />
+            <img
+              src={
+                user.avatar
+                  ? `http://localhost:5000${user.avatar}`
+                  : '/user.png'
+              }
+              alt=''
+              className='size-full object-cover'
+            />
           </button>
         ) : (
           <div className='flex items-center gap-1'>
-            <Link to='/login' className='py-1 px-2 rounded-lg bg-blue-50 hover:bg-blue-200 border text-blue-500 font-light'>
+            <Link
+              to='/login'
+              className='py-1 px-2 rounded-lg bg-blue-50 hover:bg-blue-200 border text-blue-500 font-light'
+            >
               Login
             </Link>
-            <Link to='/signup' className='py-1 px-2 rounded-lg bg-blue-700 hover:bg-blue-900 border text-white/85 font-light'>
+            <Link
+              to='/signup'
+              className='py-1 px-2 rounded-lg bg-blue-700 hover:bg-blue-900 border text-white/85 font-light'
+            >
               Sign up
             </Link>
           </div>
-        )
-        }
-      </div >
-    </div >
+        )}
+      </div>
+    </div>
   )
 }
