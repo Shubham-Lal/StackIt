@@ -43,7 +43,7 @@
 // import { Worker, Auth, Home, Admin } from './pages'
 // import { Protected, NotFound, ValidLink } from './components'
 import { BrowserRouter, Route, Routes } from 'react-router-dom'
-import Home from './components/pages/Home/Home'
+import Home from './pages/Home/Home'
 import NotFound from './components/NotFound'
 import Navbar from './components/Navbar'
 
