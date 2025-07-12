@@ -1,0 +1,35 @@
+{
+  "name": "stackit",
+  "version": "1.0.0",
+  "description": "The server of stackit, the next stackOverflow.",
+  "keywords": [
+    "forum",
+    "stackOverflow"
+  ],
+  "homepage": "https://github.com/Jay9874/stackIt#readme",
+  "bugs": {
+    "url": "https://github.com/Jay9874/stackIt/issues"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Jay9874/stackIt.git"
+  },
+  "license": "MIT",
+  "author": "Jay Prakash Sharma & Shubham Lal & Shristi Jha",
+  "type": "commonjs",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "dependencies": {
+    "body-parser": "^2.2.0",
+    "dotenv": "^17.2.0",
+    "express": "^5.1.0",
+    "nodemon": "^3.1.10"
+  },
+  "devDependencies": {
+    "@eslint/js": "^9.31.0",
+    "eslint": "^9.31.0",
+    "globals": "^16.3.0"
+  }
+}
