@@ -1,4 +1,4 @@
-# StackIt. The next StackOverflow
+
 # StackIt – A Minimal Q&A Forum Platform
 
 **StackIt** is a clean, community-focused question-and-answer platform that promotes collaborative learning and structured knowledge sharing. Inspired by platforms like StackOverflow, StackIt focuses on simplicity, usability, and essential Q&A features.
