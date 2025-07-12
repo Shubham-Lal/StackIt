@@ -43,54 +43,23 @@
 // import { Worker, Auth, Home, Admin } from './pages'
 // import { Protected, NotFound, ValidLink } from './components'
 import { BrowserRouter, Route, Routes } from 'react-router-dom'
-import Home from './pages/Home/Home'
+import Home from './pages/Home'
 import NotFound from './components/NotFound'
-import Navbar from './components/Navbar'
+import About from './pages/About'
+import Team from './pages/Team'
+import Contact from './pages/Contact'
+import Main from './pages/Main'
 
 export default function App () {
   return (
     <BrowserRouter>
       <Routes>
-        <Route path='' element={<Home />} />
-        {/* <Route path='/auth' element={<Auth />}>
-          <Route path='login' element={<SignInForm />} />
-          <Route path='recovery' element={<ForgotPass />} />
-          <Route path='verify' element={<Verify />} />
-          <Route element={<ValidLink />}>
-            <Route path='reset' element={<ResetPass />} />
-          </Route>
-          <Route path='*' element={<NotFound path='auth' />} />
-        </Route> */}
-        {/* <Route element={<Protected />}>
-          <Route path='worker' element={<Worker />}>
-            <Route path='dashboard' element={<Dashboard />} />
-            <Route path='profile' element={<Profile />} />
-            <Route path='jobs' element={<Jobs />}>
-              <Route path='enroll/:jobId' element={<EnrollJob />} />
-            </Route>
-            <Route path='payment' element={<Payment />} />
-            <Route path='attendance' element={<Attendance />} />
-            <Route path='*' element={<NotFound path='worker' />} />
-          </Route>
-          <Route path='admin' element={<Admin />}>
-            <Route path='dashboard' element={<AdminDashboard />} />
-            <Route path='jobs' element={<AdminJobs />}>
-              <Route index element={<ViewJobs />} />
-              <Route path='add' element={<AddJob />} />
-            </Route>
-            <Route path='attendance' element={<AdminAttendance />}>
-              <Route path='job/:jobId' element={<JobAttendance />} />
-            </Route>
-            <Route path='workers' element={<Employee />}>
-              <Route index element={<ViewEmployees />} />
-              <Route path='add' element={<Progress />} />
-              <Route path='edit/:id' element={<EditEmployee />} />
-            </Route>
-            <Route path='payout' element={<Payout />} />
-            <Route path='profile' element={<AdminProfile />} />
-            <Route path='*' element={<NotFound path='admin' />} />
-          </Route>
-        </Route> */}
+        <Route element={<Main />}>
+          <Route path='' element={<Home />} />
+          <Route path='about' element={<About />} />
+          <Route path='team' element={<Team />} />
+          <Route path='contact' element={<Contact />} />
+        </Route>
         <Route path='*' element={<NotFound path='*' />} />
       </Routes>
     </BrowserRouter>
