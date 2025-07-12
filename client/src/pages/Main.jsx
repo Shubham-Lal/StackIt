@@ -6,7 +6,9 @@ export default function Main () {
   return (
     <div>
       <Navbar />
-      <Outlet />
+      <div className='px-26'>
+        <Outlet />
+      </div>
     </div>
   )
 }
