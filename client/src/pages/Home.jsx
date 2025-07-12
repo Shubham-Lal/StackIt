@@ -37,7 +37,16 @@ export default function Home() {
             Ask a Question
           </NavLink>
         </div>
+        {/* Filters */}
+        <div className='w-full flex justify-end'>
+          <div></div>
+          {/* filter button */}
+          <div>
+            <button>Filter</button>
+          </div>
+        </div>
 
+        {/* Searchbar */}
         <div className='flex mt-4 items-center gap-1 focus-within:border-amber-500 rounded-lg p-2 border-1 border-gray-300'>
           <label className='block text-gray-100 h-4 w-4' htmlFor='search-bar'>
             <svg
