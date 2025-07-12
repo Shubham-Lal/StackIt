@@ -27,7 +27,7 @@ export default function Post({ post }) {
   }
 
   return (
-    <div className='flex gap-4 p-4 border-b border-gray-300'>
+    <div className='mt-8 flex gap-4 p-4 border-t border-gray-300'>
       {/* Left part of post */}
       <div className='text-right whitespace-nowrap'>
         <p>0 votes</p>
