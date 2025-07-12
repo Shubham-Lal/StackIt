@@ -34,7 +34,7 @@ export default function Home () {
       <section>
         {/* Ask a new question */}
         <div className='flex items-center justify-between'>
-          <div>{activeFilter} Questions</div>
+          <h1 className='text-xl'>{activeFilter} Questions</h1>
           <NavLink to='/ask' className='rounded-lg p-2 bg-blue-500 text-white'>
             Ask a Question
           </NavLink>
@@ -60,7 +60,7 @@ export default function Home () {
                   version='1.1'
                   xmlns='http://www.w3.org/2000/svg'
                 >
-                  <g id='SVGRepo_bgCarrier' stroke-width='0'></g>
+                  <g id='SVGRepo_bgCarrier' strokeWidth='0'></g>
                   <g
                     id='SVGRepo_tracerCarrier'
                     strokeLinecap='round'
