@@ -1,10 +1,91 @@
 import React, { useState } from 'react'
 import { NavLink } from 'react-router-dom'
+import Post from '../components/Post'
 
 export default function Home () {
   const [filters, setFilters] = useState(['Newest', 'Most voted'])
   const [activeFilter, setActiveFilter] = useState(filters[0])
 
+  const posts = [
+    {
+      id: 1,
+      title: 'How to center a div',
+      description:
+        'I have been struggling to center a div without using css and javascript. This was a real challenge when css was not invented. I wonder how much of time it would have taken by folks those days.',
+      views: 20,
+      votes: 5,
+      answers: 5,
+      tags: ['CSS', 'HTML', 'Web'],
+      username: 'Jay9874',
+      totalAsks: 30,
+      timestamp: '5 min ago'
+    },
+    {
+      id: 2,
+      title: 'How to center a div',
+      description:
+        'I have been struggling to center a div without using css and javascript. This was a real challenge when css was not invented. I wonder how much of time it would have taken by folks those days.',
+      views: 20,
+      votes: 5,
+      answers: 5,
+      tags: ['CSS', 'HTML', 'Web'],
+      username: 'Jay9874',
+      totalAsks: 30,
+      timestamp: '5 min ago'
+    },
+    {
+      id: 3,
+      title: 'How to center a div',
+      description:
+        'I have been struggling to center a div without using css and javascript. This was a real challenge when css was not invented. I wonder how much of time it would have taken by folks those days.',
+      views: 20,
+      votes: 5,
+      answers: 5,
+      tags: ['CSS', 'HTML', 'Web'],
+      username: 'Jay9874',
+      totalAsks: 30,
+      timestamp: '5 min ago'
+    },
+    {
+      id: 4,
+      title: 'How to center a div',
+      description:
+        'I have been struggling to center a div without using css and javascript. This was a real challenge when css was not invented. I wonder how much of time it would have taken by folks those days.',
+      views: 20,
+      votes: 5,
+      answers: 5,
+      tags: ['CSS', 'HTML', 'Web'],
+      username: 'Jay9874',
+      totalAsks: 30,
+      timestamp: '5 min ago'
+    },
+    {
+      id: 5,
+      title: 'How to center a div',
+      description:
+        'I have been struggling to center a div without using css and javascript. This was a real challenge when css was not invented. I wonder how much of time it would have taken by folks those days.',
+      views: 20,
+      votes: 5,
+      answers: 5,
+      tags: ['CSS', 'HTML', 'Web'],
+      username: 'Jay9874',
+      totalAsks: 30,
+      timestamp: '5 min ago'
+    },
+    {
+      id: 6,
+      title: 'How to center a div',
+      description:
+        'I have been struggling to center a div without using css and javascript. This was a real challenge when css was not invented. I wonder how much of time it would have taken by folks those days.',
+      views: 20,
+      votes: 5,
+      answers: 5,
+      tags: ['CSS', 'HTML', 'Web'],
+      username: 'Jay9874',
+      totalAsks: 30,
+      timestamp: '5 min ago'
+    }
+  ]
   return (
     <div className='py-8 px-24'>
       {/* Search params section */}
@@ -47,6 +128,12 @@ export default function Home () {
             type='text'
             placeholder='Search...'
           />
+        </div>
+        {/* Show the questions based on filter */}
+        <div>
+          {posts.map(post => (
+            <Post key={post.id} post={post} />
+          ))}
         </div>
       </section>
     </div>

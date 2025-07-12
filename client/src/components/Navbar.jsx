@@ -7,7 +7,7 @@ export default function Navbar () {
   const { isAuthenticated, user } = useUserStore()
 
   return (
-    <div className='sticky top-0 border-b-1 border-gray-300'>
+    <div className='sticky top-0 border-b-1 border-gray-300 bg-white'>
       <div className='flex justify-between items-center py-2 px-24'>
         <div className='flex gap-8 items-center'>
           <NavLink to=''>
