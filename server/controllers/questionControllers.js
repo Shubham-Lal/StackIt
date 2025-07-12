@@ -1,5 +1,18 @@
 const Question = require('../models/Question');
 
+exports.getAllQuestions = async (req, res) => {
+    try {
+        const questions = await Question.find()
+            .populate('user', 'name avatar')
+            .sort({ createdAt: -1 });
+
+        res.status(200).json({ questions });
+    }
+    catch (err) {
+        res.status(500).json({ message: 'Failed to fetch questions' });
+    }
+};
+
 exports.uploadImage = (req, res) => {
     const fileUrl = `http://localhost:${process.env.PORT || 5000}/uploads/questions/${req.file.filename}`;
     res.json({ url: fileUrl });

@@ -5,6 +5,7 @@ const fs = require('fs');
 const path = require('path');
 const verifyToken = require('../middlewares/verifyToken');
 const {
+    getAllQuestions,
     uploadImage,
     saveQuestion
 } = require('../controllers/questionControllers');
@@ -26,6 +27,7 @@ const storage = multer.diskStorage({
 });
 const upload = multer({ storage });
 
+router.get('/all', getAllQuestions);
 router.post('/upload-image', verifyToken, upload.single('image'), uploadImage);
 router.post('/save-question', verifyToken, saveQuestion);
 
