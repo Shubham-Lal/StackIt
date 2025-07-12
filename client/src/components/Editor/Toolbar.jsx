@@ -1,3 +1,13 @@
+import {
+    MdFormatListNumbered,
+    MdFormatListBulleted,
+    MdLink,
+    MdFormatAlignLeft,
+    MdFormatAlignCenter,
+    MdFormatAlignRight,
+    MdImage
+} from "react-icons/md"
+
 const Toolbar = ({ editorRef, pendingImagesRef }) => {
     const format = (command, value = null) => {
         document.execCommand(command, false, value)
@@ -56,15 +66,15 @@ const Toolbar = ({ editorRef, pendingImagesRef }) => {
             <button onClick={() => format('bold')}><b>B</b></button>
             <button onClick={() => format('italic')}><i>I</i></button>
             <button onClick={() => format('strikeThrough')}><s>S</s></button>
-            <button onClick={() => format('insertOrderedList')}>Numbered List</button>
-            <button onClick={() => format('insertUnorderedList')}>Bullet List</button>
-            <button onClick={insertEmoji}>Emoji</button>
-            <button onClick={insertLink}>Hyperlink</button>
-            <button onClick={() => format('justifyLeft')}>Left Align</button>
-            <button onClick={() => format('justifyCenter')}>Center Align</button>
-            <button onClick={() => format('justifyRight')}>Right Align</button>
+            <button onClick={() => format('insertOrderedList')}><MdFormatListNumbered size={22} /></button>
+            <button onClick={() => format('insertUnorderedList')}><MdFormatListBulleted size={22} /></button>
+            <button onClick={insertEmoji}>😊</button>
+            <button onClick={insertLink}><MdLink size={22} /></button>
+            <button onClick={() => format('justifyLeft')}><MdFormatAlignLeft size={22} /></button>
+            <button onClick={() => format('justifyCenter')}><MdFormatAlignCenter size={22} /></button>
+            <button onClick={() => format('justifyRight')}><MdFormatAlignRight size={22} /></button>
             <label className='upload-btn'>
-                Upload Image
+                <MdImage size={22} />
                 <input
                     type='file'
                     accept='image/*'

@@ -1,12 +1,6 @@
-import { useRef, useState } from 'react'
 import Toolbar from './Toolbar'
 
-const Editor = () => {
-    const editorRef = useRef(null)
-    const [content, setContent] = useState('')
-    const selectionRef = useRef(null)
-    const pendingImagesRef = useRef([])
-
+const Editor = ({ editorRef, setContent, selectionRef, pendingImagesRef }) => {
     const handleInput = () => {
         if (editorRef.current) {
             setContent(editorRef.current.innerHTML)
@@ -20,36 +14,8 @@ const Editor = () => {
         }
     }
 
-    const handleSave = async () => {
-        let html = content
-
-        for (const { file, blobUrl } of pendingImagesRef.current) {
-            const formData = new FormData()
-            formData.append('image', file)
-
-            const response = await fetch('http://localhost:5000/upload-image', {
-                method: 'POST',
-                body: formData
-            })
-
-            const data = await response.json()
-            const serverUrl = data.url
-
-            html = html.replaceAll(blobUrl, serverUrl)
-        }
-
-        await fetch('http://localhost:5000/save-content', {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ html })
-        })
-
-        pendingImagesRef.current = []
-        alert('Saved successfully!')
-    }
-
     return (
-        <div className='container'>
+        <div className='editor-container'>
             <Toolbar
                 editorRef={editorRef}
                 pendingImagesRef={pendingImagesRef}
@@ -63,10 +29,6 @@ const Editor = () => {
                 onMouseUp={saveSelection}
                 onKeyUp={saveSelection}
             />
-
-            <button onClick={handleSave} style={{ marginTop: '1rem' }}>
-                💾 Save
-            </button>
         </div>
     )
 }
