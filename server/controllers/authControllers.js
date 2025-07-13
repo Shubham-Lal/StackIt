@@ -1,5 +1,4 @@
 const ImageKit = require('imagekit');
-const fs = require('fs');
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
 const User = require('../models/User');
@@ -53,7 +52,7 @@ exports.signup = async (req, res) => {
         }
 
         if (req.file) {
-            const fileBuffer = fs.readFileSync(req.file.path);
+            const fileBuffer = req.file.buffer;
             const fileName = req.file.originalname;
 
             const uploadResult = await imagekit.upload({
@@ -63,8 +62,6 @@ exports.signup = async (req, res) => {
             });
 
             avatarUrl = uploadResult.url;
-
-            fs.unlinkSync(req.file.path);
         }
 
         const hashedPassword = await bcrypt.hash(password, 10);

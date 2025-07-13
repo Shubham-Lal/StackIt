@@ -43,16 +43,13 @@ exports.getAllQuestions = async (req, res) => {
 exports.uploadImage = async (req, res) => {
     try {
         const file = req.file;
-        const fileBuffer = fs.readFileSync(file.path);
 
         const uploadResult = await imagekit.upload({
-            file: fileBuffer,
+            file: file.buffer,
             fileName: file.originalname,
             tags: ['question-image'],
             folder: 'question-images',
         });
-
-        fs.unlinkSync(file.path);
 
         return res.status(200).json({ url: uploadResult.url });
     }
