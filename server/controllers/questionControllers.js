@@ -12,7 +12,7 @@ exports.getQuestionById = async (req, res) => {
     const { id } = req.params;
 
     try {
-        const question = await Question.findById(id)
+        let question = await Question.findById(id)
             .populate('user', 'name avatar')
             .exec();
 
@@ -23,6 +23,7 @@ exports.getQuestionById = async (req, res) => {
         const ip =
             req.headers['x-forwarded-for']?.split(',').shift() ||
             req.socket?.remoteAddress;
+
         const cacheKey = `${id}:${ip}`;
         const alreadyViewed = viewCache.get(cacheKey);
 
@@ -33,7 +34,7 @@ exports.getQuestionById = async (req, res) => {
                 { timestamps: false }
             );
             viewCache.set(cacheKey, true);
-            question.views += 1;
+            question.views = question.views + 1;
         }
 
         res.json(question);
