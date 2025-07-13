@@ -40,7 +40,7 @@ export default function QuestionDetails() {
                         Modified <span className='text-black'>{getTimeAgo(question.updatedAt)}</span>
                     </p>
                 )}
-                <p className='text-gray-500'>Viewed <span className='text-black'>1 time</span></p>
+                <p className='text-gray-500'>Viewed <span className='text-black'>{question.views} {question.views > 1 ? 'times' : 'time'}</span></p>
             </div>
 
             <div className='mt-5 flex gap-4'>

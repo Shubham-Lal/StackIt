@@ -1,6 +1,6 @@
 const ImageKit = require('imagekit');
-const fs = require('fs');
 const Question = require('../models/Question');
+const viewCache = require('../utils/cache');
 
 const imagekit = new ImageKit({
     publicKey: process.env.IMAGEKIT_PUBLIC_KEY,
@@ -11,12 +11,6 @@ const imagekit = new ImageKit({
 exports.getQuestionById = async (req, res) => {
     const { id } = req.params;
 
-    const ip =
-        req.headers['x-forwarded-for']?.split(',').shift() ||
-        req.socket?.remoteAddress;
-
-    console.log('User IP:', ip);
-
     try {
         const question = await Question.findById(id)
             .populate('user', 'name avatar')
@@ -24,6 +18,22 @@ exports.getQuestionById = async (req, res) => {
 
         if (!question) {
             return res.status(404).json({ message: 'Question not found' });
+        }
+
+        const ip =
+            req.headers['x-forwarded-for']?.split(',').shift() ||
+            req.socket?.remoteAddress;
+        const cacheKey = `${id}:${ip}`;
+        const alreadyViewed = viewCache.get(cacheKey);
+
+        if (!alreadyViewed) {
+            await Question.updateOne(
+                { _id: id },
+                { $inc: { views: 1 } },
+                { timestamps: false }
+            );
+            viewCache.set(cacheKey, true);
+            question.views += 1;
         }
 
         res.json(question);

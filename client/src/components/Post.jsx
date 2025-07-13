@@ -14,7 +14,7 @@ const Post = ({ post }) => {
       <div className='flex gap-2 sm:flex-col sm:text-right text-sm whitespace-nowrap'>
         <p>0 votes</p>
         <p className='text-gray-600'>0 answers</p>
-        <p className='text-gray-600'>0 views</p>
+        <p className='text-gray-600'>{post.views} {post.views > 1 ? 'views' : 'view'}</p>
       </div>
 
       {/* The right portion the post */}
