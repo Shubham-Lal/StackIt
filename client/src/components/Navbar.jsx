@@ -10,12 +10,13 @@ const Navbar = () => {
   const [openSidebar, setOpenSidebar] = useState(false);
 
   const handleLogout = () => {
+    setOpenSidebar(false);
     localStorage.removeItem('token');
     clearUser();
   }
 
   return (
-    <div className='sticky top-0 border-b-1 border-gray-300 bg-white'>
+    <div className='sticky top-0 border-b-1 border-[hsl(210,8%,90%)] bg-white'>
       <div className='relative max-w-6xl w-full mx-auto p-2 flex justify-between items-center'>
         <div className='flex gap-8 items-center'>
           <NavLink to=''>
@@ -70,7 +71,10 @@ const Navbar = () => {
         </div>
 
         {openSidebar && (
-          <div className='absolute top-[59px] right-0 py-2 px-4 flex flex-col gap-2 border border-gray-300 bg-white'>
+          <div
+            className='absolute top-[59px] right-2 py-2 px-4 flex flex-col gap-2 border border-[hsl(210,8%,90%)] bg-white'
+            style={{ boxShadow: '0 1px 2px hsla(0,0%,0%,0.05),0 1px 4px hsla(0,0%,0%,0.05),0 2px 8px hsla(0,0%,0%,0.05)' }}
+          >
             <div className='flex sm:hidden flex-col gap-2'>
               <NavlinkButton buttonLabel='About' buttonHref='/about' />
               <NavlinkButton buttonLabel='Team' buttonHref='/team' />

@@ -81,7 +81,7 @@ export default function Home() {
         </div>
 
         {/* Searchbar */}
-        <div className='flex mt-4 mb-8 items-center gap-1 focus-within:border-amber-500 rounded-lg p-2 border-1 border-gray-300'>
+        <div className='mt-4 mb-8 py-2 px-3 flex items-center gap-2 focus-within:border-amber-500 rounded-lg border-1 border-gray-300'>
           <label className='block text-gray-100 h-4 w-4' htmlFor='search-bar'>
             <svg
               viewBox='0 0 24 24'

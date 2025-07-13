@@ -57,7 +57,7 @@ export default function PostQuestion() {
                 });
 
                 if (!response.ok) {
-                    throw new Error('Image upload failed');
+                    throw new Error(response.status === 401 ? 'Login to ask question' : 'Image upload failed');
                 }
 
                 const data = await response.json();

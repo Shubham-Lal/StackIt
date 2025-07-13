@@ -32,8 +32,8 @@ export default function QuestionDetails() {
     else if (!question?._id) return <div className='max-w-6xl w-full mx-auto py-8 px-2 text-red-600'>Question not found</div>
     return (
         <div className='max-w-6xl w-full mx-auto py-8 px-2'>
-            <h1 className='text-xl md:text-2xl text-gray-800'>{question.title}</h1>
-            <div className='pt-3 pb-5 flex flex-wrap gap-3 text-[11px] md:text-xs border-b border-gray-300'>
+            <h1 className='text-[22px] md:text-[27px] text-gray-800'>{question.title}</h1>
+            <div className='pt-3 md:pt-2 pb-5 flex flex-wrap gap-3 text-[11px] md:text-xs border-b border-gray-300'>
                 <p className='text-gray-500'>Asked <span className='text-black'>{getTimeAgo(question.createdAt)}</span></p>
                 {question.updatedAt !== question.createdAt && (
                     <p className='text-gray-500'>
@@ -43,7 +43,7 @@ export default function QuestionDetails() {
                 <p className='text-gray-500'>Viewed <span className='text-black'>{question.views} {question.views > 1 ? 'times' : 'time'}</span></p>
             </div>
 
-            <div className='mt-5 flex gap-4'>
+            <div className='mt-5 px-2 flex gap-4'>
                 <div className='flex flex-col gap-2 items-center'>
                     <button
                         className='size-[40px] grid place-items-center border border-gray-300 hover:bg-[hsl(27,89%,87%)] rounded-full cursor-pointer'
