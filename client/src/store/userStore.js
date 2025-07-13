@@ -5,5 +5,5 @@ export const useUserStore = create((set) => ({
     setUser: (userData) => set({ user: userData }),
     isAuthenticated: false,
     setAuthenticated: (state) => set({ isAuthenticated: state }),
-    clearUser: () => set({ user: null, authenticated: false }),
+    clearUser: () => set({ user: null, isAuthenticated: false }),
 }));

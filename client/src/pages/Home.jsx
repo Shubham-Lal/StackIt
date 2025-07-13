@@ -32,7 +32,7 @@ export default function Home() {
   }, [questions.length, setQuestions])
 
   return (
-    <div className='py-8 px-24'>
+    <div className='max-w-6xl w-full mx-auto py-8 px-2'>
       <section>
         {/* Ask a new question */}
         <div className='flex items-center justify-between'>
@@ -42,7 +42,7 @@ export default function Home() {
           </NavLink>
         </div>
         {/* Filters */}
-        <div className='w-full flex items-center justify-end gap-4 mt-4'>
+        <div className='w-full flex items-center justify-between gap-4 mt-4'>
           <div className='flex p-1 items-center border gap-1 border-gray-300 rounded-lg'>
             {/* <p className='px-2 py-1 rounded-md bg-gray-200'>Newest</p>
             <p className='px-2 py-1 rounded-md bg-gray-200'>Active</p>

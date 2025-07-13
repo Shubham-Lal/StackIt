@@ -101,7 +101,7 @@ export default function PostQuestion() {
     };
 
     return (
-        <div className='py-8 px-24'>
+        <div className='max-w-6xl w-full mx-auto py-8 px-2'>
             <div className='mb-4 w-full'>
                 <p className='mb-2'>Title</p>
                 <div className='w-full flex items-center gap-1 focus-within:border-amber-500 rounded-lg p-2 border-1 border-gray-300'>

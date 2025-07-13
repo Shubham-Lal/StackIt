@@ -1,4 +1,4 @@
-export default function PaginationButton({ active, pageNumber }) {
+const PaginationButton = ({ active, pageNumber }) => {
   return (
     <div>
       <button
@@ -12,3 +12,5 @@ export default function PaginationButton({ active, pageNumber }) {
     </div>
   )
 }
+
+export default PaginationButton

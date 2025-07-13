@@ -76,83 +76,85 @@ export default function Signup() {
     };
 
     return (
-        <div className='max-w-md mx-auto p-6 bg-white rounded-xl shadow-md mt-10'>
-            <h2 className='text-2xl font-semibold mb-6 text-center'>Create an Account</h2>
-            <form onSubmit={handleSubmit} encType='multipart/form-data' className='space-y-4'>
-                <div>
-                    <label className='block mb-1 font-medium'>Avatar</label>
-                    <input
-                        type='file'
-                        accept='image/*'
-                        onChange={handleAvatarChange}
-                        className='block w-full text-sm text-gray-500
+        <div className="max-w-md mx-auto px-2">
+            <div className='p-6 bg-white rounded-xl shadow-md mt-10'>
+                <h2 className='text-2xl font-semibold mb-6 text-center'>Create an Account</h2>
+                <form onSubmit={handleSubmit} encType='multipart/form-data' className='space-y-4'>
+                    <div>
+                        <label className='block mb-1 font-medium'>Avatar</label>
+                        <input
+                            type='file'
+                            accept='image/*'
+                            onChange={handleAvatarChange}
+                            className='block w-full text-sm text-gray-500
                                    file:mr-4 file:py-2 file:px-4
                                    file:rounded-full file:border-0
                                    file:text-sm file:font-semibold
                                    file:bg-blue-50 file:text-blue-700
                                    hover:file:bg-blue-100 cursor-pointer'
-                    />
-                    {avatarPreview && (
-                        <img
-                            src={avatarPreview}
-                            alt='Avatar Preview'
-                            className='w-24 h-24 rounded-full mt-3 object-cover border'
                         />
-                    )}
-                </div>
+                        {avatarPreview && (
+                            <img
+                                src={avatarPreview}
+                                alt='Avatar Preview'
+                                className='w-24 h-24 rounded-full mt-3 object-cover border'
+                            />
+                        )}
+                    </div>
 
-                <div>
-                    <label className='block mb-1 font-medium'>Name</label>
-                    <input
-                        type='text'
-                        name='name'
-                        value={formData.name}
-                        onChange={handleChange}
-                        className='w-full px-3 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500'
-                    />
-                </div>
+                    <div>
+                        <label className='block mb-1 font-medium'>Name</label>
+                        <input
+                            type='text'
+                            name='name'
+                            value={formData.name}
+                            onChange={handleChange}
+                            className='w-full px-3 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500'
+                        />
+                    </div>
 
-                <div>
-                    <label className='block mb-1 font-medium'>Email</label>
-                    <input
-                        type='email'
-                        name='email'
-                        value={formData.email}
-                        onChange={handleChange}
-                        className='w-full px-3 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500'
-                    />
-                </div>
+                    <div>
+                        <label className='block mb-1 font-medium'>Email</label>
+                        <input
+                            type='email'
+                            name='email'
+                            value={formData.email}
+                            onChange={handleChange}
+                            className='w-full px-3 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500'
+                        />
+                    </div>
 
-                <div>
-                    <label className='block mb-1 font-medium'>Password</label>
-                    <input
-                        type='password'
-                        name='password'
-                        value={formData.password}
-                        onChange={handleChange}
-                        className='w-full px-3 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500'
-                    />
-                </div>
+                    <div>
+                        <label className='block mb-1 font-medium'>Password</label>
+                        <input
+                            type='password'
+                            name='password'
+                            value={formData.password}
+                            onChange={handleChange}
+                            className='w-full px-3 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500'
+                        />
+                    </div>
 
-                <div>
-                    <label className='block mb-1 font-medium'>Confirm Password</label>
-                    <input
-                        type='password'
-                        name='confirmPassword'
-                        value={formData.confirmPassword}
-                        onChange={handleChange}
-                        className='w-full px-3 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500'
-                    />
-                </div>
+                    <div>
+                        <label className='block mb-1 font-medium'>Confirm Password</label>
+                        <input
+                            type='password'
+                            name='confirmPassword'
+                            value={formData.confirmPassword}
+                            onChange={handleChange}
+                            className='w-full px-3 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500'
+                        />
+                    </div>
 
-                <button
-                    disabled={isLoading}
-                    type='submit'
-                    className={`w-full py-2 px-4 text-white rounded-md transition duration-200 ${isLoading ? 'bg-gray-300 cursor-not-allowed' : 'bg-blue-600 hover:bg-blue-700 cursor-pointer'}`}
-                >
-                    {isLoading ? 'Signing up...' : 'Sign Up'}
-                </button>
-            </form>
+                    <button
+                        disabled={isLoading}
+                        type='submit'
+                        className={`w-full py-2 px-4 text-white rounded-md transition duration-200 ${isLoading ? 'bg-gray-300 cursor-not-allowed' : 'bg-blue-600 hover:bg-blue-700 cursor-pointer'}`}
+                    >
+                        {isLoading ? 'Signing up...' : 'Sign Up'}
+                    </button>
+                </form>
+            </div>
         </div>
     )
 }

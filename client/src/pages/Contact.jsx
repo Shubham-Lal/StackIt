@@ -1,7 +1,7 @@
-import React from 'react'
-
 export default function Contact() {
   return (
-    <div>Contact</div>
+    <div className='max-w-6xl w-full mx-auto py-8 px-2'>
+      Contact
+    </div>
   )
 }

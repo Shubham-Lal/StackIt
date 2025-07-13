@@ -1,7 +1,6 @@
-import React from 'react'
-import { Link, NavLink } from 'react-router-dom'
+import { NavLink } from 'react-router-dom'
 
-export default function NavlinkButton ({ buttonLabel, buttonHref }) {
+const NavlinkButton = ({ buttonLabel, buttonHref }) => {
   return (
     <NavLink
       to={buttonHref}
@@ -18,3 +17,5 @@ export default function NavlinkButton ({ buttonLabel, buttonHref }) {
     </NavLink>
   )
 }
+
+export default NavlinkButton

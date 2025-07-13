@@ -26,10 +26,10 @@ export default function QuestionDetails() {
         fetchQuestion()
     }, [question_id])
 
-    if (isLoading) return <div className='py-8 px-24'>Loading...</div>
-    else if (!question?._id) return <div className='py-8 px-24 text-red-600'>Question not found</div>
+    if (isLoading) return <div className='max-w-6xl w-full mx-auto py-8 px-2'>Loading...</div>
+    else if (!question?._id) return <div className='max-w-6xl w-full mx-auto py-8 px-2 text-red-600'>Question not found</div>
     return (
-        <div className='py-8 px-24'>
+        <div className='max-w-6xl w-full mx-auto py-8 px-2'>
             Question Page
         </div>
     )
