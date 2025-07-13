@@ -48,7 +48,7 @@ export default function PostQuestion() {
                 const formData = new FormData();
                 formData.append('image', file);
 
-                const response = await fetch('http://localhost:5000/api/questions/upload-image', {
+                const response = await fetch(`${import.meta.env.VITE_SERVER_URL}/api/questions/upload-image`, {
                     method: 'POST',
                     headers: {
                         Authorization: `Bearer ${localStorage.getItem('token')}`
@@ -65,7 +65,7 @@ export default function PostQuestion() {
                 html = html.replaceAll(blobUrl, serverUrl);
             }
 
-            const res = await fetch('http://localhost:5000/api/questions/save-question', {
+            const res = await fetch(`${import.meta.env.VITE_SERVER_URL}/api/questions/save-question`, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',

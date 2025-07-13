@@ -1,4 +1,3 @@
-
 # StackIt – A Minimal Q&A Forum Platform
 
 **StackIt** is a clean, community-focused question-and-answer platform that promotes collaborative learning and structured knowledge sharing. Inspired by platforms like StackOverflow, StackIt focuses on simplicity, usability, and essential Q&A features.
@@ -14,18 +13,18 @@ StackIt enables users to:
 - Get notified on interactions
 - Experience a minimal, distraction-free interface
 
- Mockup: [StackIt UI Wireframes](https://link.excalidraw.com/l/65VNwvy7c4X/8bM86GXnnUN)  
- Notification UI Mockup: [Notification System](https://link.excalidraw.com/l/65VNwvy7c4X/9mhEahV0MQg)
+Mockup: [StackIt UI Wireframes](https://link.excalidraw.com/l/65VNwvy7c4X/8bM86GXnnUN)  
+Notification UI Mockup: [Notification System](https://link.excalidraw.com/l/65VNwvy7c4X/9mhEahV0MQg)
 
 ---
 
 ##  User Roles
 
-| Role   | Permissions                                                                 |
+| Role   | Permissions                                                                  |
 |--------|------------------------------------------------------------------------------|
-| Guest  | View all questions and answers                                              |
-| User   | Register, log in, post questions/answers, upvote/downvote answers          |
-| Admin  | Moderate content, manage users, send announcements, download reports        |
+| Guest  | View all questions and answers                                               |
+| User   | Register, log in, post questions/answers, upvote/downvote answers            |
+| Admin  | Moderate content, manage users, send announcements, download reports         |
 
 ---
 
@@ -88,7 +87,6 @@ Admins can:
 - **State Management**: Zustand
 - **Routing**: React Router
 
-
 ---
 
 ## 🛠 Getting Started
@@ -96,5 +94,3 @@ Admins can:
 ### Prerequisites
 - Node.js v18 (recommended)
 - npm
-
-

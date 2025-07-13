@@ -10,7 +10,7 @@ export default function QuestionDetails() {
     useEffect(() => {
         const fetchQuestion = async () => {
             try {
-                const res = await fetch(`http://localhost:5000/api/questions/${question_id}`)
+                const res = await fetch(`${import.meta.env.VITE_SERVER_URL}/api/questions/${question_id}`)
                 const response = await res.json();
 
                 if (response._id) setQuestion(response);

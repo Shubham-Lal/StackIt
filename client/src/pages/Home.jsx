@@ -14,7 +14,7 @@ export default function Home() {
   useEffect(() => {
     const fetchQuestions = async () => {
       try {
-        const res = await fetch('http://localhost:5000/api/questions/all')
+        const res = await fetch(`${import.meta.env.VITE_SERVER_URL}/api/questions/all`)
         const data = await res.json()
         if (res.ok) {
           setQuestions(data.questions)
