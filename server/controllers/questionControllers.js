@@ -12,6 +12,14 @@ exports.getQuestionById = async (req, res) => {
     const { id } = req.params;
 
     try {
+        let question = await Question.findById(id)
+            .populate('user', 'name avatar')
+            .exec();
+
+        if (!question) {
+            return res.status(404).json({ message: 'Question not found' });
+        }
+
         const ip =
             req.headers['x-forwarded-for']?.split(',').shift() ||
             req.socket?.remoteAddress;
@@ -19,23 +27,16 @@ exports.getQuestionById = async (req, res) => {
         const cacheKey = `${id}:${ip}`;
         const alreadyViewed = viewCache.get(cacheKey);
 
+        console.log({ ip, cacheKey, alreadyViewed })
+
         if (!alreadyViewed) {
-            const updatePromise = Question.updateOne(
+            viewCache.set(cacheKey, true);
+            await Question.updateOne(
                 { _id: id },
                 { $inc: { views: 1 } },
                 { timestamps: false }
             );
-
-            await updatePromise;
-            viewCache.set(cacheKey, true);
-        }
-
-        const question = await Question.findById(id)
-            .populate('user', 'name avatar')
-            .exec();
-
-        if (!question) {
-            return res.status(404).json({ message: 'Question not found' });
+            question.views = question.views + 1;
         }
 
         res.json(question);
