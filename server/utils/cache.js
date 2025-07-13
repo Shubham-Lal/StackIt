@@ -1,13 +1,7 @@
-const NodeCache = require('node-cache');
+const { createCache } = require('cache-manager');
 
-const viewCache = new NodeCache({ stdTTL: 86400, checkperiod: 60 });
-
-viewCache.on('expired', (key, value) => {
-    console.log(`[Cache expired] Key: ${key}`);
-});
-
-viewCache.on('del', (key, value) => {
-    console.log(`[Cache deleted] Key: ${key}`);
+const viewCache = createCache({
+    ttl: 60 * 60 * 24
 });
 
 module.exports = viewCache;
