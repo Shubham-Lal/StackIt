@@ -1,11 +1,11 @@
-const FilterButton = ({ active, label }) => {
+const FilterButton = ({ label, activeFilter, setActiveFilter }) => {
   return (
-    <p
-      className={`px-2 py-1 rounded-md  ${active === label ? 'bg-gray-200' : 'hover:bg-gray-50'
-        }`}
+    <button
+      className={`px-2 py-1 text-sm rounded-md  ${activeFilter === label ? 'bg-gray-200' : 'hover:bg-gray-50'} cursor-pointer`}
+      onClick={() => setActiveFilter(label)}
     >
       {label}
-    </p>
+    </button>
   )
 }
 

@@ -37,7 +37,7 @@ const Pagination = () => {
             pageNumber={perPage}
           />
         ))}
-        <span>per page</span>
+        <span>results per page</span>
       </div>
     </div>
   )
