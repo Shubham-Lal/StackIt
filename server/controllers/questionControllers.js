@@ -28,12 +28,12 @@ exports.getQuestionById = async (req, res) => {
         const alreadyViewed = viewCache.get(cacheKey);
 
         if (!alreadyViewed) {
+            viewCache.set(cacheKey, true);
             await Question.updateOne(
                 { _id: id },
                 { $inc: { views: 1 } },
                 { timestamps: false }
             );
-            viewCache.set(cacheKey, true);
             question.views = question.views + 1;
         }
 
