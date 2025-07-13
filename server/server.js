@@ -5,7 +5,7 @@ const path = require('path')
 const mongoose = require('mongoose')
 
 const app = express()
-const PORT = process.env.PORT;
+app.set('trust proxy', true);
 
 app.use(cors({
     origin: process.env.CLIENT_URL,
@@ -24,6 +24,7 @@ mongoose.connect(process.env.MONGODB_URI)
     .then(async () => {
         app.get('/', (req, res) => res.status(200).json({ status: 'Server running...' }));
 
+        const PORT = process.env.PORT || 5000;
         app.listen(PORT, () => {
             console.log(`🚀 Server running at http://localhost:${PORT}`)
         })

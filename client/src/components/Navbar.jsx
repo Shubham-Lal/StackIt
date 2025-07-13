@@ -28,11 +28,11 @@ const Navbar = () => {
             </div>
           </NavLink>
 
-          <ul className='hidden sm:flex gap-2 text-gray-600'>
+          <div className='hidden sm:flex gap-2 text-gray-600'>
             <NavlinkButton buttonLabel='About' buttonHref='/about' />
             <NavlinkButton buttonLabel='Team' buttonHref='/team' />
             <NavlinkButton buttonLabel='Contact' buttonHref='/contact' />
-          </ul>
+          </div>
         </div>
 
         <div className='flex items-center gap-2'>

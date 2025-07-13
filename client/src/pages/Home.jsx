@@ -105,7 +105,7 @@ export default function Home() {
           />
         </div>
 
-        <div className='bg-gray-300 w-full h-[1px]' />
+        <div className='border-b border-gray-300' />
 
         {/* Show the questions */}
         {questions.length > 0 ? (

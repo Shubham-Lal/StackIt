@@ -11,6 +11,12 @@ const imagekit = new ImageKit({
 exports.getQuestionById = async (req, res) => {
     const { id } = req.params;
 
+    const ip =
+        req.headers['x-forwarded-for']?.split(',').shift() ||
+        req.socket?.remoteAddress;
+
+    console.log('User IP:', ip);
+
     try {
         const question = await Question.findById(id)
             .populate('user', 'name avatar')

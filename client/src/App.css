@@ -1,5 +1,13 @@
 @import "tailwindcss";
 
+ul li {
+  list-style: disc;
+}
+
+ol li {
+  list-style: decimal;
+}
+
 .editor-container {
   width: 100%;
   padding: 1rem;
@@ -45,9 +53,7 @@
   text-decoration: underline;
 }
 
-.editor ul li {
-  list-style: disc;
-}
-.editor ol li {
-  list-style: decimal;
+#description ul,
+#description ol {
+  padding-left: 1.5rem;
 }
