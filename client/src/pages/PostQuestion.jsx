@@ -48,7 +48,7 @@ export default function PostQuestion() {
                 const formData = new FormData();
                 formData.append('image', file);
 
-                const response = await fetch(`${import.meta.env.VITE_SERVER_URL}/api/questions/upload-image`, {
+                const response = await fetch(`${import.meta.env.VITE_SERVER_URL}/api/qa/upload-image`, {
                     method: 'POST',
                     headers: {
                         Authorization: `Bearer ${localStorage.getItem('token')}`
@@ -65,7 +65,7 @@ export default function PostQuestion() {
                 html = html.replaceAll(blobUrl, serverUrl);
             }
 
-            const res = await fetch(`${import.meta.env.VITE_SERVER_URL}/api/questions/save-question`, {
+            const res = await fetch(`${import.meta.env.VITE_SERVER_URL}/api/qa/save-question`, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
@@ -131,13 +131,15 @@ export default function PostQuestion() {
                 setTags={setTags}
             />
 
-            <button
-                disabled={isLoading}
-                onClick={handleSave}
-                className={`${isLoading ? 'bg-gray-300 cursor-not-allowed' : 'bg-amber-500 hover:bg-amber-600 cursor-pointer'} mt-6 px-4 py-2 text-white rounded`}
-            >
-                {isLoading ? 'Posting...' : 'Post Question'}
-            </button>
+            <div className='mt-6 w-full flex justify-center'>
+                <button
+                    disabled={isLoading}
+                    onClick={handleSave}
+                    className={`${isLoading ? 'bg-gray-300 cursor-not-allowed' : 'bg-amber-500 hover:bg-amber-600 cursor-pointer'} px-4 py-2 text-white rounded`}
+                >
+                    {isLoading ? 'Posting...' : 'Post Question'}
+                </button>
+            </div>
         </div>
     )
 }

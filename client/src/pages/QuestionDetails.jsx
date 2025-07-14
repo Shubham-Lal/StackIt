@@ -1,21 +1,102 @@
-import { useEffect, useState } from 'react'
+import { useState, useRef, useEffect } from 'react'
 import { useParams } from 'react-router-dom'
 import { toast } from 'sonner'
 import { IoCaretUpSharp, IoCaretDownSharp } from 'react-icons/io5'
 import { getTimeAgo } from '../utils/timeUtils'
+import Editor from '../components/Editor'
 
 export default function QuestionDetails() {
     const { question_id } = useParams()
-    const [question, setQuestion] = useState(null)
+    const [details, setDetails] = useState(null)
     const [isLoading, setLoading] = useState(true)
+
+    const [answer, setAnswer] = useState('');
+    const [isSubmitting, setSubmitting] = useState(false);
+
+    const editorRef = useRef(null);
+    const selectionRef = useRef(null);
+    const pendingImagesRef = useRef([]);
+
+    const handleSubmit = async () => {
+        const extractPlainText = (html) => {
+            const tempDiv = document.createElement('div');
+            tempDiv.innerHTML = html;
+            return tempDiv.textContent.replace(/\u00a0/g, '').trim();
+        };
+
+        if (!answer || !extractPlainText(answer)) {
+            return toast.error('Answer cannot be empty');
+        }
+
+        setSubmitting(true);
+
+        try {
+            let html = answer;
+
+            for (const { file, blobUrl } of pendingImagesRef.current) {
+                const formData = new FormData();
+                formData.append('image', file);
+
+                const response = await fetch(`${import.meta.env.VITE_SERVER_URL}/api/qa/upload-image`, {
+                    method: 'POST',
+                    headers: {
+                        Authorization: `Bearer ${localStorage.getItem('token')}`
+                    },
+                    body: formData
+                });
+
+                if (!response.ok) {
+                    throw new Error(response.status === 401 ? 'Login to post answer' : 'Image upload failed');
+                }
+
+                const data = await response.json();
+                const serverUrl = data.url;
+                html = html.replaceAll(blobUrl, serverUrl);
+            }
+
+            const res = await fetch(`${import.meta.env.VITE_SERVER_URL}/api/qa/save-answer`, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    Authorization: `Bearer ${localStorage.getItem('token')}`
+                },
+                body: JSON.stringify({
+                    question_id,
+                    content: html
+                })
+            });
+
+            const response = await res.json();
+
+            if (!res.ok) {
+                throw new Error(response.message || 'Failed to save answer');
+            }
+
+            toast.success('Answer posted successfully!');
+
+            if (editorRef.current) {
+                editorRef.current.innerHTML = '';
+            }
+
+            setAnswer('');
+            pendingImagesRef.current = [];
+            selectionRef.current = null;
+        }
+        catch (err) {
+            toast.error(err.message || 'An error occurred while posting the answer');
+        }
+        finally {
+            setSubmitting(false);
+        }
+    };
 
     useEffect(() => {
         const fetchQuestion = async () => {
             try {
-                const res = await fetch(`${import.meta.env.VITE_SERVER_URL}/api/questions/${question_id}`)
+                const res = await fetch(`${import.meta.env.VITE_SERVER_URL}/api/qa/${question_id}`)
                 const response = await res.json();
 
-                if (response._id) setQuestion(response);
+                if (response?.question?._id) setDetails(response);
             }
             catch (err) {
                 toast.error(err.message)
@@ -29,18 +110,18 @@ export default function QuestionDetails() {
     }, [question_id])
 
     if (isLoading) return <div className='max-w-6xl w-full mx-auto py-6 sm:py-8 px-2'>Loading...</div>
-    else if (!question?._id) return <div className='max-w-6xl w-full mx-auto py-6 sm:py-8 px-2 text-red-600'>Question not found</div>
+    else if (!details?.question?._id) return <div className='max-w-6xl w-full mx-auto py-6 sm:py-8 px-2 text-red-600'>Question not found</div>
     return (
         <div className='max-w-6xl w-full mx-auto py-6 sm:py-8 px-2'>
-            <h1 className='text-[22px] md:text-[27px] text-gray-800'>{question.title}</h1>
+            <h1 className='text-[22px] md:text-[27px] text-gray-800'>{details.question.title}</h1>
             <div className='pt-3 md:pt-2 pb-5 flex flex-wrap gap-3 text-[11px] md:text-xs border-b border-gray-300'>
-                <p className='text-gray-500'>Asked <span className='text-black'>{getTimeAgo(question.createdAt)}</span></p>
-                {question.updatedAt !== question.createdAt && (
+                <p className='text-gray-500'>Asked <span className='text-black'>{getTimeAgo(details.question.createdAt)}</span></p>
+                {details.question.updatedAt !== details.question.createdAt && (
                     <p className='text-gray-500'>
-                        Modified <span className='text-black'>{getTimeAgo(question.updatedAt)}</span>
+                        Modified <span className='text-black'>{getTimeAgo(details.question.updatedAt)}</span>
                     </p>
                 )}
-                <p className='text-gray-500'>Viewed <span className='text-black'>{question.views} {question.views > 1 ? 'times' : 'time'}</span></p>
+                <p className='text-gray-500'>Viewed <span className='text-black'>{details.question.views} {details.question.views > 1 ? 'times' : 'time'}</span></p>
             </div>
 
             <div className='mt-5 px-2 flex gap-4'>
@@ -59,9 +140,9 @@ export default function QuestionDetails() {
                 </div>
 
                 <div>
-                    <div id='description' dangerouslySetInnerHTML={{ __html: question.description }} />
+                    <div id='description' dangerouslySetInnerHTML={{ __html: details.question.description }} />
                     <div className='mt-6 flex flex-wrap gap-1'>
-                        {question.tags.map((tag, index) => (
+                        {details.question.tags.map((tag, index) => (
                             <button
                                 key={index}
                                 className='h-fit py-0.5 px-2 rounded bg-gray-200 text-gray-600 text-xs font-semibold cursor-pointer'
@@ -71,6 +152,26 @@ export default function QuestionDetails() {
                         ))}
                     </div>
                 </div>
+            </div>
+
+            <h1 className='mt-10 mb-2 text-lg text-gray-600'>Submit Your Answer</h1>
+
+            <Editor
+                editorRef={editorRef}
+                content={answer}
+                setContent={setAnswer}
+                selectionRef={selectionRef}
+                pendingImagesRef={pendingImagesRef}
+            />
+
+            <div className='mt-6 w-full flex justify-center'>
+                <button
+                    disabled={isSubmitting}
+                    onClick={handleSubmit}
+                    className={`${isSubmitting ? 'bg-gray-300 cursor-not-allowed' : 'bg-amber-500 hover:bg-amber-600 cursor-pointer'} px-4 py-2 text-white rounded`}
+                >
+                    {isSubmitting ? 'Submitting...' : 'Submit'}
+                </button>
             </div>
         </div>
     )

@@ -53,9 +53,31 @@ ol li {
   text-decoration: underline;
 }
 
+.editor ul,
+.editor ol,
 #description ul,
 #description ol {
-  padding-left: 1.5rem;
+  padding-left: 1.4rem;
+}
+
+[align="center"] ul,
+[align="center"] ol,
+[align="right"] ul,
+[align="right"] ol {
+  list-style-position: inside;
+  padding-left: 0;
+  display: table;
+  text-align: inherit;
+}
+
+[align="right"] ul,
+[align="right"] ol {
+  margin-left: auto;
+}
+
+[align="center"] ul,
+[align="center"] ol {
+  margin: 0 auto;
 }
 
 #description {

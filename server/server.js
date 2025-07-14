@@ -18,7 +18,7 @@ app.use('/uploads', express.static(path.join(__dirname, 'uploads')))
 app.use(express.json())
 
 app.use('/api/auth', require('./routes/authRoutes'));
-app.use('/api/questions', require('./routes/questionRoutes'));
+app.use('/api/qa', require('./routes/qaRoutes'));
 
 mongoose.connect(process.env.MONGODB_URI)
     .then(async () => {

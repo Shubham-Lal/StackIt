@@ -26,8 +26,7 @@ const Editor = ({ editorRef, setContent, selectionRef, pendingImagesRef }) => {
             />
             <div
                 ref={editorRef}
-                className={`editor min-h-[200px] p-4 rounded-lg border ${isFocused ? 'border-amber-500 outline-none' : 'border-gray-300'
-                    }`}
+                className={`editor min-h-[200px] p-4 rounded-lg border ${isFocused ? 'border-amber-500 outline-none' : 'border-gray-300'}`}
                 contentEditable
                 suppressContentEditableWarning={true}
                 onInput={handleInput}

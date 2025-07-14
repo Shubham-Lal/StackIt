@@ -3,11 +3,12 @@ const router = express.Router();
 const multer = require('multer');
 const verifyToken = require('../middlewares/verifyToken');
 const {
-    getQuestionById,
     getAllQuestions,
     uploadImage,
-    saveQuestion
-} = require('../controllers/questionControllers');
+    saveQuestion,
+    saveAnswer,
+    getQAsById,
+} = require('../controllers/qaControllers');
 
 const storage = multer.memoryStorage();
 const upload = multer({ storage });
@@ -15,6 +16,7 @@ const upload = multer({ storage });
 router.get('/all', getAllQuestions);
 router.post('/upload-image', verifyToken, upload.single('image'), uploadImage);
 router.post('/save-question', verifyToken, saveQuestion);
-router.get('/:id', getQuestionById);
+router.post('/save-answer', verifyToken, saveAnswer);
+router.get('/:id', getQAsById);
 
 module.exports = router;

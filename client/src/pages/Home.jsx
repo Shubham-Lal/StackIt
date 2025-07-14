@@ -14,7 +14,7 @@ export default function Home() {
   useEffect(() => {
     const fetchQuestions = async () => {
       try {
-        const res = await fetch(`${import.meta.env.VITE_SERVER_URL}/api/questions/all`)
+        const res = await fetch(`${import.meta.env.VITE_SERVER_URL}/api/qa/all`)
         const data = await res.json()
         if (res.ok) {
           setQuestions(data.questions)
@@ -32,7 +32,7 @@ export default function Home() {
   }, [questions.length, setQuestions])
 
   return (
-    <div className='max-w-6xl w-full mx-auto py-6 sm:py-6 sm:py-8 px-2'>
+    <div className='max-w-6xl w-full mx-auto py-6 sm:py-8 px-2'>
       <section>
         {/* Ask a new question */}
         <div className='flex items-center justify-between'>

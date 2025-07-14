@@ -21,6 +21,11 @@ const questionSchema = new mongoose.Schema({
     views: {
         type: Number,
         default: 0
+    },
+    acceptedAnswer: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'Answer',
+        default: null
     }
 }, { timestamps: true });
 
