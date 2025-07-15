@@ -10,7 +10,7 @@ export default function QuestionDetails() {
     const [details, setDetails] = useState(null)
     const [isLoading, setLoading] = useState(true)
 
-    const [answer, setAnswer] = useState('');
+    const [userAnswer, setUserAnswer] = useState('');
     const [isSubmitting, setSubmitting] = useState(false);
 
     const editorRef = useRef(null);
@@ -24,14 +24,14 @@ export default function QuestionDetails() {
             return tempDiv.textContent.replace(/\u00a0/g, '').trim();
         };
 
-        if (!answer || !extractPlainText(answer)) {
+        if (!userAnswer || !extractPlainText(userAnswer)) {
             return toast.error('Answer cannot be empty');
         }
 
         setSubmitting(true);
 
         try {
-            let html = answer;
+            let html = userAnswer;
 
             for (const { file, blobUrl } of pendingImagesRef.current) {
                 const formData = new FormData();
@@ -78,7 +78,7 @@ export default function QuestionDetails() {
                 editorRef.current.innerHTML = '';
             }
 
-            setAnswer('');
+            setUserAnswer('');
             pendingImagesRef.current = [];
             selectionRef.current = null;
         }
@@ -139,27 +139,87 @@ export default function QuestionDetails() {
                     </button>
                 </div>
 
-                <div>
-                    <div id='description' dangerouslySetInnerHTML={{ __html: details.question.description }} />
-                    <div className='mt-6 flex flex-wrap gap-1'>
-                        {details.question.tags.map((tag, index) => (
-                            <button
-                                key={index}
-                                className='h-fit py-0.5 px-2 rounded bg-gray-200 text-gray-600 text-xs font-semibold cursor-pointer'
-                            >
-                                {tag.toLowerCase()}
-                            </button>
-                        ))}
+                <div className='w-full flex flex-col gap-4'>
+                    <div>
+                        <div id='description' dangerouslySetInnerHTML={{ __html: details.question.description }} />
+                        <div className='mt-6 flex flex-wrap gap-1'>
+                            {details.question.tags.map((tag, index) => (
+                                <button
+                                    key={index}
+                                    className='h-fit py-0.5 px-2 rounded bg-gray-200 text-gray-600 text-xs font-semibold cursor-pointer'
+                                >
+                                    {tag.toLowerCase()}
+                                </button>
+                            ))}
+                        </div>
+                    </div>
+                    <div className='flex-grow w-full flex items-end'>
+                        <div className='w-fit ml-auto p-1.5 flex flex-col justify-end gap-2 bg-[#edf5fd] rounded'>
+                            <p className='text-xs text-gray-600 whitespace-nowrap'>asked {getTimeAgo(details.question.createdAt)}</p>
+                            <div className='flex items-center gap-1'>
+                                <img
+                                    src={details.question.user.avatar || '/user.png'}
+                                    className="size-8 rounded outline outline-[hsl(210,8%,90%)]"
+                                    onError={(e) => {
+                                        e.target.style.display = 'none';
+                                    }}
+                                />
+                                <p className='text-[13px] whitespace-nowrap'>{details.question.user.name}</p>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
 
-            <h1 className='mt-10 mb-2 text-lg text-gray-600'>Submit Your Answer</h1>
+            {details.answers.length > 0 && (
+                <>
+                    <h1 className='mt-10 text-lg text-gray-800'>{details.answers.length} Answer</h1>
+
+                    {details.answers.map(answer => (
+                        <div key={answer._id} className='pt-5 pb-6 px-2 flex gap-4 border-b-1 border-[hsl(210,8%,90%)]'>
+                            <div className='flex flex-col gap-2 items-center'>
+                                <button
+                                    className='size-[40px] grid place-items-center border border-gray-300 hover:bg-[hsl(27,89%,87%)] rounded-full cursor-pointer'
+                                >
+                                    <IoCaretUpSharp size={18} className='text-gray-700' />
+                                </button>
+                                <p className='text-lg'>{answer.upvotes.length - answer.downvotes.length}</p>
+                                <button
+                                    className='size-[40px] grid place-items-center border border-gray-300 hover:bg-[hsl(27,89%,87%)] rounded-full cursor-pointer'
+                                >
+                                    <IoCaretDownSharp size={18} className='text-gray-700' />
+                                </button>
+                            </div>
+
+                            <div className='w-full flex flex-col gap-4'>
+                                <div id='description' dangerouslySetInnerHTML={{ __html: answer.content }} />
+                                <div className='flex-grow w-full flex items-end'>
+                                    <div className='w-fit ml-auto flex flex-col justify-end gap-2'>
+                                        <p className='text-xs text-gray-600 whitespace-nowrap'>answered {getTimeAgo(answer.createdAt)}</p>
+                                        <div className='flex items-center gap-1'>
+                                            <img
+                                                src={answer.user.avatar || '/user.png'}
+                                                className="size-8 rounded outline outline-[hsl(210,8%,90%)]"
+                                                onError={(e) => {
+                                                    e.target.style.display = 'none';
+                                                }}
+                                            />
+                                            <p className='text-[13px] whitespace-nowrap'>{answer.user.name}</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    ))}
+                </>
+            )}
+
+            <h1 className='mt-5 mb-2 text-lg text-gray-600'>Submit Your Answer</h1>
 
             <Editor
                 editorRef={editorRef}
-                content={answer}
-                setContent={setAnswer}
+                content={userAnswer}
+                setContent={setUserAnswer}
                 selectionRef={selectionRef}
                 pendingImagesRef={pendingImagesRef}
             />
