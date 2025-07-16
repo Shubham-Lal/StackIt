@@ -120,7 +120,11 @@ exports.saveAnswer = async (req, res) => {
         });
 
         await answer.save();
-        await Question.updateOne({ _id: question_id }, { $inc: { answerCount: 1 } });
+        await Question.updateOne(
+            { _id: question_id },
+            { $inc: { answerCount: 1 } },
+            { timestamps: false }
+        );
 
         const savedAnswer = answer.toObject();
         savedAnswer._id = answer._id;
@@ -137,6 +141,50 @@ exports.saveAnswer = async (req, res) => {
     }
     catch (err) {
         res.status(500).json({ message: 'Failed to save answer', error: err.message });
+    }
+};
+
+exports.voteAnswer = async (req, res) => {
+    const { answerId, type } = req.body;
+    const userId = req.user._id;
+
+    if (!answerId || !['upvote', 'downvote'].includes(type)) {
+        return res.status(400).json({ message: 'Invalid vote request' });
+    }
+
+    try {
+        const answer = await Answer.findById(answerId);
+        if (!answer) {
+            return res.status(404).json({ message: 'Answer not found' });
+        }
+
+        if (answer.user.toString() === userId.toString()) {
+            return res.status(403).json({ message: 'You cannot vote on your own answer' });
+        }
+
+        const hasUpvoted = answer.upvotes.includes(userId);
+        const hasDownvoted = answer.downvotes.includes(userId);
+
+        answer.upvotes = answer.upvotes.filter(id => id.toString() !== userId.toString());
+        answer.downvotes = answer.downvotes.filter(id => id.toString() !== userId.toString());
+
+        if (type === 'upvote' && !hasUpvoted) {
+            answer.upvotes.push(userId);
+        }
+        else if (type === 'downvote' && !hasDownvoted) {
+            answer.downvotes.push(userId);
+        }
+
+        await answer.save();
+
+        return res.status(200).json({
+            message: 'Vote updated',
+            upvotes: answer.upvotes,
+            downvotes: answer.downvotes
+        });
+    }
+    catch (err) {
+        return res.status(500).json({ message: 'Failed to vote', error: err.message });
     }
 };
 

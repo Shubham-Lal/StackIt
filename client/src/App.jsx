@@ -8,7 +8,7 @@ import Contact from './pages/Contact';
 import Login from './pages/Auth/Login';
 import Signup from './pages/Auth/Signup';
 import PostQuestion from './pages/PostQuestion';
-import QuestionDetails from './pages/QuestionDetails';
+import QuestionAnswers from './pages/QA';
 import NotFound from './pages/NotFound';
 import { useAuthFetch } from './hooks/useAuthFetch';
 
@@ -28,7 +28,7 @@ export default function App() {
         <Route path='/login' element={<Login />} />
         <Route path='/signup' element={<Signup />} />
         <Route path='/ask' element={<PostQuestion />} />
-        <Route path='/question/:question_id' element={<QuestionDetails />} />
+        <Route path='/question/:question_id' element={<QuestionAnswers />} />
         <Route path='about' element={<About />} />
         <Route path='team' element={<Team />} />
         <Route path='contact' element={<Contact />} />
