@@ -13,7 +13,7 @@ const Post = ({ post }) => {
       {/* Left part of post */}
       <div className='sm:mt-1 flex gap-2 sm:flex-col sm:text-right text-sm whitespace-nowrap'>
         <p>0 votes</p>
-        <p className='text-gray-600'>0 answers</p>
+        <p className='text-gray-600'>{post.answerCount} {post.answerCount > 1 ? 'answers' : 'answer'}</p>
         <p className='text-gray-600'>{post.views} {post.views > 1 ? 'views' : 'view'}</p>
       </div>
 

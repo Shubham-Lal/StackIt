@@ -2,11 +2,15 @@ import { useState, useRef, useEffect } from 'react'
 import { useParams } from 'react-router-dom'
 import { toast } from 'sonner'
 import { IoCaretUpSharp, IoCaretDownSharp } from 'react-icons/io5'
+import { useQuestionStore } from '../store/questionStore'
 import { getTimeAgo } from '../utils/timeUtils'
 import Editor from '../components/Editor'
 
 export default function QuestionDetails() {
     const { question_id } = useParams()
+
+    const { questions, setQuestions } = useQuestionStore();
+
     const [details, setDetails] = useState(null)
     const [isLoading, setLoading] = useState(true)
 
@@ -74,10 +78,17 @@ export default function QuestionDetails() {
 
             toast.success('Answer posted successfully!');
 
-            if (editorRef.current) {
-                editorRef.current.innerHTML = '';
-            }
+            setDetails(prev => ({
+                ...prev,
+                answers: [...prev.answers, response.answer]
+            }));
 
+            const updatedQuestions = questions.map(q =>
+                q._id === question_id ? { ...q, answerCount: (q.answerCount || 0) + 1 } : q
+            );
+            setQuestions(updatedQuestions)
+
+            if (editorRef.current) editorRef.current.innerHTML = '';
             setUserAnswer('');
             pendingImagesRef.current = [];
             selectionRef.current = null;
@@ -175,42 +186,55 @@ export default function QuestionDetails() {
                 <>
                     <h1 className='mt-10 text-lg text-gray-800'>{details.answers.length} Answer</h1>
 
-                    {details.answers.map(answer => (
-                        <div key={answer._id} className='pt-5 pb-6 px-2 flex gap-4 border-b-1 border-[hsl(210,8%,90%)]'>
-                            <div className='flex flex-col gap-2 items-center'>
-                                <button
-                                    className='size-[40px] grid place-items-center border border-gray-300 hover:bg-[hsl(27,89%,87%)] rounded-full cursor-pointer'
-                                >
-                                    <IoCaretUpSharp size={18} className='text-gray-700' />
-                                </button>
-                                <p className='text-lg'>{answer.upvotes.length - answer.downvotes.length}</p>
-                                <button
-                                    className='size-[40px] grid place-items-center border border-gray-300 hover:bg-[hsl(27,89%,87%)] rounded-full cursor-pointer'
-                                >
-                                    <IoCaretDownSharp size={18} className='text-gray-700' />
-                                </button>
-                            </div>
+                    {[...details.answers]
+                        .sort((a, b) => {
+                            const votesA = a.upvotes.length - a.downvotes.length;
+                            const votesB = b.upvotes.length - b.downvotes.length;
 
-                            <div className='w-full flex flex-col gap-4'>
-                                <div id='description' dangerouslySetInnerHTML={{ __html: answer.content }} />
-                                <div className='flex-grow w-full flex items-end'>
-                                    <div className='w-fit ml-auto flex flex-col justify-end gap-2'>
-                                        <p className='text-xs text-gray-600 whitespace-nowrap'>answered {getTimeAgo(answer.createdAt)}</p>
-                                        <div className='flex items-center gap-1'>
-                                            <img
-                                                src={answer.user.avatar || '/user.png'}
-                                                className="size-8 rounded outline outline-[hsl(210,8%,90%)]"
-                                                onError={(e) => {
-                                                    e.target.style.display = 'none';
-                                                }}
-                                            />
-                                            <p className='text-[13px] whitespace-nowrap'>{answer.user.name}</p>
+                            if (votesA !== votesB) {
+                                return votesB - votesA;
+                            }
+
+                            return new Date(a.createdAt) - new Date(b.createdAt);
+                        })
+                        .map(answer => (
+                            <div key={answer._id} className='pt-5 pb-6 px-2 flex gap-4 border-b-1 border-[hsl(210,8%,90%)]'>
+                                <div className='flex flex-col gap-2 items-center'>
+                                    <button
+                                        className='size-[40px] grid place-items-center border border-gray-300 hover:bg-[hsl(27,89%,87%)] rounded-full cursor-pointer'
+                                    >
+                                        <IoCaretUpSharp size={18} className='text-gray-700' />
+                                    </button>
+                                    <p className='text-lg'>{answer.upvotes.length - answer.downvotes.length}</p>
+                                    <button
+                                        className='size-[40px] grid place-items-center border border-gray-300 hover:bg-[hsl(27,89%,87%)] rounded-full cursor-pointer'
+                                    >
+                                        <IoCaretDownSharp size={18} className='text-gray-700' />
+                                    </button>
+                                </div>
+
+                                <div className='w-full flex flex-col gap-4'>
+                                    <div id='description' dangerouslySetInnerHTML={{ __html: answer.content }} />
+                                    <div className='flex-grow w-full flex items-end'>
+                                        <div className='w-fit ml-auto flex flex-col justify-end gap-2'>
+                                            <p className='text-xs text-gray-600 whitespace-nowrap'>
+                                                answered {getTimeAgo(answer.createdAt)}
+                                            </p>
+                                            <div className='flex items-center gap-1'>
+                                                <img
+                                                    src={answer.user.avatar || '/user.png'}
+                                                    className="size-8 rounded outline outline-[hsl(210,8%,90%)]"
+                                                    onError={(e) => {
+                                                        e.target.style.display = 'none';
+                                                    }}
+                                                />
+                                                <p className='text-[13px] whitespace-nowrap'>{answer.user.name}</p>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
                             </div>
-                        </div>
-                    ))}
+                        ))}
                 </>
             )}
 

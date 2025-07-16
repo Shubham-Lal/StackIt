@@ -120,6 +120,7 @@ exports.saveAnswer = async (req, res) => {
         });
 
         await answer.save();
+        await Question.updateOne({ _id: question_id }, { $inc: { answerCount: 1 } });
 
         const savedAnswer = answer.toObject();
         savedAnswer._id = answer._id;
