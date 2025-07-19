@@ -1,8 +1,8 @@
 import { useState, useEffect } from 'react'
 import { useParams } from 'react-router-dom'
 import { toast } from 'sonner'
-import { IoCaretUpSharp, IoCaretDownSharp } from 'react-icons/io5'
 import { getTimeAgo } from '../../utils/timeUtils'
+import QuestionVotes from './QuestionVotes'
 import AnswerVotes from './AnswerVotes'
 import SubmitAnswer from './SubmitAnswer'
 
@@ -47,19 +47,10 @@ export default function QuestionAnswers() {
             </div>
 
             <div className='mt-5 px-2 flex gap-4'>
-                <div className='flex flex-col gap-2 items-center'>
-                    <button
-                        className='size-[40px] grid place-items-center border border-gray-300 rounded-full cursor-pointer'
-                    >
-                        <IoCaretUpSharp size={18} className='text-gray-700' />
-                    </button>
-                    <p className='text-lg'>0</p>
-                    <button
-                        className='size-[40px] grid place-items-center border border-gray-300 rounded-full cursor-pointer'
-                    >
-                        <IoCaretDownSharp size={18} className='text-gray-700' />
-                    </button>
-                </div>
+                <QuestionVotes
+                    details={details}
+                    setDetails={setDetails}
+                />
 
                 <div className='w-full flex flex-col gap-4'>
                     <div>

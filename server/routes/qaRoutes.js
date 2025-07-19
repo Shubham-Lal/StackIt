@@ -7,6 +7,7 @@ const {
     uploadImage,
     saveQuestion,
     saveAnswer,
+    voteQuestion,
     voteAnswer,
     getQAsById,
 } = require('../controllers/qaControllers');
@@ -18,6 +19,7 @@ router.get('/all', getAllQuestions);
 router.post('/upload-image', verifyToken, upload.single('image'), uploadImage);
 router.post('/save-question', verifyToken, saveQuestion);
 router.post('/save-answer', verifyToken, saveAnswer);
+router.post('/vote-question', verifyToken, voteQuestion);
 router.post('/vote-answer', verifyToken, voteAnswer);
 router.get('/:id', getQAsById);
 

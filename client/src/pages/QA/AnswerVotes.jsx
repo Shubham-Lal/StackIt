@@ -1,5 +1,5 @@
-import { IoCaretUpSharp, IoCaretDownSharp } from 'react-icons/io5'
 import { toast } from 'sonner'
+import { IoCaretUpSharp, IoCaretDownSharp } from 'react-icons/io5'
 import { useUserStore } from '../../store/userStore'
 
 const AnswerVotes = ({ details, setDetails, answer }) => {
@@ -102,14 +102,18 @@ const AnswerVotes = ({ details, setDetails, answer }) => {
         <div className='flex flex-col gap-2 items-center'>
             <button
                 onClick={() => handleVoteAnswer(answer._id, 'upvote')}
-                className={`size-[40px] grid place-items-center border border-gray-300 rounded-full cursor-pointer duration-200 ${(isAuthenticated && answer.upvotes.includes(user._id)) ? 'bg-[hsl(27,89%,87%)]' : 'active:scale-90'}`}
+                className={`size-[40px] grid place-items-center border border-gray-300 rounded-full cursor-pointer duration-200 ${(isAuthenticated && answer.upvotes.includes(user._id)) ? 'bg-[hsl(27,89%,87%)]' : 'active:scale-80'}`}
             >
                 <IoCaretUpSharp size={18} className='text-gray-700' />
             </button>
-            <p className='text-lg'>{answer.upvotes.length - answer.downvotes.length}</p>
+
+            <p className='text-lg'>
+                {answer.upvotes.length - answer.downvotes.length}
+            </p>
+
             <button
                 onClick={() => handleVoteAnswer(answer._id, 'downvote')}
-                className={`size-[40px] grid place-items-center border border-gray-300 rounded-full cursor-pointer duration-200 ${(isAuthenticated && answer.downvotes.includes(user._id)) ? 'bg-[hsl(27,89%,87%)]' : 'active:scale-90'}`}
+                className={`size-[40px] grid place-items-center border border-gray-300 rounded-full cursor-pointer duration-200 ${(isAuthenticated && answer.downvotes.includes(user._id)) ? 'bg-[hsl(27,89%,87%)]' : 'active:scale-80'}`}
             >
                 <IoCaretDownSharp size={18} className='text-gray-700' />
             </button>

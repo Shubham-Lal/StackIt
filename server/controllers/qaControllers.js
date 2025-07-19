@@ -144,6 +144,50 @@ exports.saveAnswer = async (req, res) => {
     }
 };
 
+exports.voteQuestion = async (req, res) => {
+    const { questionId, type } = req.body;
+    const userId = req.user._id;
+
+    if (!questionId || !['upvote', 'downvote'].includes(type)) {
+        return res.status(400).json({ message: 'Invalid vote request' });
+    }
+
+    try {
+        const question = await Question.findById(questionId);
+        if (!question) {
+            return res.status(404).json({ message: 'Question not found' });
+        }
+
+        if (question.user.toString() === userId.toString()) {
+            return res.status(403).json({ message: 'You cannot vote on your own question' });
+        }
+
+        const hasUpvoted = question.upvotes.includes(userId);
+        const hasDownvoted = question.downvotes.includes(userId);
+
+        question.upvotes = question.upvotes.filter(id => id.toString() !== userId.toString());
+        question.downvotes = question.downvotes.filter(id => id.toString() !== userId.toString());
+
+        if (type === 'upvote' && !hasUpvoted) {
+            question.upvotes.push(userId);
+        }
+        if (type === 'downvote' && !hasDownvoted) {
+            question.downvotes.push(userId);
+        }
+
+        await question.save({ timestamps: false });
+
+        return res.status(200).json({
+            message: 'Vote updated',
+            upvotes: question.upvotes,
+            downvotes: question.downvotes
+        });
+    }
+    catch (err) {
+        return res.status(500).json({ message: 'Failed to vote', error: err.message });
+    }
+};
+
 exports.voteAnswer = async (req, res) => {
     const { answerId, type } = req.body;
     const userId = req.user._id;
