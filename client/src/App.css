@@ -8,7 +8,7 @@ ol li {
   list-style: decimal;
 }
 
-.taphtml__header {
+#taphtml {
   display: none !important;
 }
 
