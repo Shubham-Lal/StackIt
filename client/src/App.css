@@ -8,10 +8,6 @@ ol li {
   list-style: decimal;
 }
 
-#taphtml {
-  display: none !important;
-}
-
 .editor-container {
   width: 100%;
   padding: 1rem;
